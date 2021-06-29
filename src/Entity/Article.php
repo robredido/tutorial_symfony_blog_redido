@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -49,6 +50,23 @@ class Article
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $comments;
+
+    public function getAllPropertiesAndValues(): ?string
+    {
+        $data = "";
+
+        foreach ($this as $key => $value) {
+            $data .= "$key => ";
+
+            if ($value instanceof DateTime) {
+                $data .= $value->format('d/m/Y')."\n";
+            } else {
+                $data .= "$value\n";
+            }
+        }
+
+        return $data;
+    }
 
     public function getId(): ?int
     {

@@ -91,7 +91,7 @@ class ArticleController extends AbstractController
     public function showArticleAutomatically(Article $article): Response
     {
         // Show article automatically and "Print all properties and values"
-        return new Response(print_r($article, true));
+        return new Response($article->getAllPropertiesAndValues());
     }
 
     /**
@@ -164,10 +164,15 @@ class ArticleController extends AbstractController
      */
     public function searchByTitle(Request $request): Response
     {
-        $articles = $this->getDoctrine()
+        $searchedArticles = $this->getDoctrine()
             ->getRepository(Article::class)
             ->searchByTitle($request->query->get('title'));
 
-        return new Response(print_r($articles, true));
+        $articlesAsString = "";
+        foreach ($searchedArticles as $article) {
+            $articlesAsString .= $article->getAllPropertiesAndValues()."\n";
+        }
+
+        return new Response($articlesAsString);
     }
 }
