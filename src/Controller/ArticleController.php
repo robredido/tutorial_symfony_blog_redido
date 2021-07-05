@@ -10,38 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends AbstractController
 {
-//    /**
-//     * @Route("/articles", name="article")
-//     */
-//    public function index(): Response
-//    {
-//        return $this->render('article/index.html.twig', [
-//            'controller_name' => 'ArticleController',
-//        ]);
-//    }
-
-    /**
-     * @Route("/articles/create", name="create_article")
-     */
-    public function createArticle(): Response
-    {
-        // you can fetch the EntityManager via $this->getDoctrine()
-        // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $article = new Article();
-        $article->setTitle('My favorite beach in Visayas');
-        $article->setBody('cebu');
-
-        // tell Doctrine you want to (eventually) save the Article (no queries yet)
-        $entityManager->persist($article);
-
-        // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
-
-        return new Response('Saved new article with id '.$article->getId());
-    }
-
     /**
      * @Route("/articles/create/post", methods={"POST"}, name="create_article_post")
      * @param Request $request
