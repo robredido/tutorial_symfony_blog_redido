@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -47,25 +48,13 @@ class Article
     private $update_date;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article")
      */
     private $comments;
 
-    public function getAllPropertiesAndValues(): ?string
+    public function __construct()
     {
-        $data = "";
-
-        foreach ($this as $key => $value) {
-            $data .= "$key => ";
-
-            if ($value instanceof DateTime) {
-                $data .= $value->format('d/m/Y')."\n";
-            } else {
-                $data .= "$value\n";
-            }
-        }
-
-        return $data;
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,14 +122,32 @@ class Article
         return $this;
     }
 
-    public function getComments(): ?string
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
     {
         return $this->comments;
     }
 
-    public function setComments(?string $comments): self
+    public function addComment(Comment $comment): self
     {
-        $this->comments = $comments;
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
+            }
+        }
 
         return $this;
     }
