@@ -21,31 +21,31 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $body;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $inserted_by;
+    private $insertedBy;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      */
-    private $insert_date;
+    private $insertDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
      */
-    private $update_date;
+    private $updateDate;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article")
@@ -88,36 +88,36 @@ class Article
 
     public function getInsertedBy(): ?string
     {
-        return $this->inserted_by;
+        return $this->insertedBy;
     }
 
-    public function setInsertedBy(?string $inserted_by): self
+    public function setInsertedBy(?string $insertedBy): self
     {
-        $this->inserted_by = $inserted_by;
+        $this->insertedBy = $insertedBy;
 
         return $this;
     }
 
     public function getInsertDate(): ?\DateTimeInterface
     {
-        return $this->insert_date;
+        return $this->insertDate;
     }
 
-    public function setInsertDate(?\DateTimeInterface $insert_date): self
+    public function setInsertDate(?\DateTimeInterface $insertDate): self
     {
-        $this->insert_date = $insert_date;
+        $this->insertDate = $insertDate;
 
         return $this;
     }
 
     public function getUpdateDate(): ?\DateTimeInterface
     {
-        return $this->update_date;
+        return $this->updateDate;
     }
 
-    public function setUpdateDate(?\DateTimeInterface $update_date): self
+    public function setUpdateDate(?\DateTimeInterface $updateDate): self
     {
-        $this->update_date = $update_date;
+        $this->updateDate = $updateDate;
 
         return $this;
     }

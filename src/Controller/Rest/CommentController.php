@@ -34,13 +34,12 @@ class CommentController extends AbstractFOSRestController
 
         $comment = new Comment();
         $comment->setArticle($article);
-        $comment->setBody($data['body']);
 
         $commentForm = $this->createForm(CommentType::class, $comment);
         $commentForm->submit($data);
 
         if(!$commentForm->isValid()){
-            return $this->view('Comment is invalid', Response::HTTP_NOT_FOUND);
+            return $this->view('Comment is invalid', Response::HTTP_BAD_REQUEST);
         }
 
         $entityManager = $this->getDoctrine()->getManager();

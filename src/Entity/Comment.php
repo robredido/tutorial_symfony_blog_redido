@@ -33,13 +33,13 @@ class Comment
      * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      */
-    private $insert_date;
+    private $insertDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="update")
      */
-    private $update_date;
+    private $updateDate;
 
     public function getId(): ?int
     {
@@ -67,24 +67,24 @@ class Comment
 
     public function getInsertDate(): ?\DateTimeInterface
     {
-        return $this->insert_date;
+        return $this->insertDate;
     }
 
-    public function setInsertDate(\DateTimeInterface $insert_date): self
+    public function setInsertDate(\DateTimeInterface $insertDate): self
     {
-        $this->insert_date = $insert_date;
+        $this->insertDate = $insertDate;
 
         return $this;
     }
 
     public function getUpdateDate(): ?\DateTimeInterface
     {
-        return $this->update_date;
+        return $this->updateDate;
     }
 
-    public function setUpdateDate(\DateTimeInterface $update_date): self
+    public function setUpdateDate(\DateTimeInterface $updateDate): self
     {
-        $this->update_date = $update_date;
+        $this->updateDate = $updateDate;
 
         return $this;
     }

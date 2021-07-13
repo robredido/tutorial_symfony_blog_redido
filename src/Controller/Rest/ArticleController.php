@@ -70,7 +70,7 @@ class ArticleController extends AbstractFOSRestController
         $form->submit($data);
 
         if (!$form->isValid()) {
-            return $this->view('Article is invalid', Response::HTTP_NOT_FOUND);
+            return $this->view('Article is invalid', Response::HTTP_BAD_REQUEST);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -92,18 +92,15 @@ class ArticleController extends AbstractFOSRestController
         $body = $request->getContent();
         $data = json_decode($body, true);
 
-        if ($article) {
-            $article->setTitle($data['title']);
-            $article->setBody($data['body']);
-        } else {
-            return $this->view('Article was not found.', Response::HTTP_NOT_FOUND);
+        if (!$article) {
+            return $this->view('Article was not found.', Response::HTTP_BAD_REQUEST);
         }
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->submit($data);
 
         if (!$form->isValid()) {
-            return $this->view('Article is invalid', Response::HTTP_NOT_FOUND);
+            return $this->view('Article is invalid', Response::HTTP_BAD_REQUEST);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
